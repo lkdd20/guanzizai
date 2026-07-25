@@ -1,0 +1,11 @@
+Guanzizai CJK Extension Fallback — modification notice
+
+On 2026-07-15, the Guanzizai project created a WOFF2 subset from BabelStone Han
+v16.0.3, renamed the font to "Guanzizai CJK Extension Fallback", retained only
+the CJK supplementary-plane glyphs required by the published reading corpus,
+and removed font hinting.
+
+The modified font is distributed with ARPHICPL.txt and remains freely available
+under the ARPHIC PUBLIC LICENSE.
+
+Upstream font: https://www.babelstone.co.uk/Fonts/Han.html

@@ -1,0 +1,13 @@
+name = "guanzizai-app"
+main = ".open-next/worker.js"
+compatibility_date = "2026-06-18"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+workers_dev = true
+
+[assets]
+directory = ".open-next/assets"
+binding = "ASSETS"
+
+[vars]
+AUTH_SESSION_COOKIE = "__Host-gzz_session"
+AUTH_EMAIL_OTP_ENABLED = "false"
