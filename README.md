@@ -4,6 +4,8 @@
 
 项目当前以 Next.js、React 和 TypeScript 构建，覆盖从内容导入、整理和审核，到前台阅读、个人书房和引用式问答的完整流程。
 
+![观自在公开版阅读界面](docs/images/reader-demo.jpg)
+
 ## 项目理念
 
 - **原文优先**：原文是阅读和引用的依据，白话释文只作辅助，不替代原文。
@@ -57,6 +59,8 @@ pnpm run build:next
 ```
 
 复制 `.env.example` 中需要的变量到未提交的本地环境文件。不要把真实密钥、数据库地址或生产数据提交到仓库。
+
+数据库初始化、环境变量、OAuth 回调及 Vercel / Cloudflare 部署步骤见 [搭建与部署指南](docs/SETUP.md)。
 
 ## 使用许可
 
