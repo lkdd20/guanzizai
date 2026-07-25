@@ -4,14 +4,17 @@
 
 本仓库是经过脱敏的源码公开版本，只附带少量原创虚构文本用于演示功能。它不包含生产站点的藏经阁书籍、真实译文、预生成回答、数据库、用户数据、支付信息或密钥。
 
+## 欢迎使用和参与
+
+欢迎将本项目用于个人学习、研究、教学、非营利部署和技术交流，也欢迎 Fork、修改代码和提交贡献。
+
+如果你计划将它用于收费产品、商业服务、企业生产环境或其他预期商业应用，请先通过 `admin@guanzizai.org` 联系我们确认授权方式。我们会根据实际用途沟通；公益、小规模或有助于典籍传播的项目，也可以申请免费或优惠的商业授权。
+
+复制、修改或分发项目时，请保留 [LICENSE](LICENSE)、[NOTICE](NOTICE) 以及其中的原仓库归属声明。
+
 ## 许可方式
 
-本项目是 **source-available（源码可见）** 项目，不是 OSI 定义的开源软件。
-
-- 非商业使用适用 [PolyForm Noncommercial License 1.0.0](LICENSE)。
-- 商业使用、商业部署、收费服务、企业内部商业用途或其他预期商业应用，必须事先取得版权所有者的明确书面许可。
-- 商业授权咨询：`admin@guanzizai.org`。发送邮件或收到回复不等于已经授权，只有明确写明授权范围的书面许可才有效。
-- 复制、修改或分发时，必须同时保留许可证和 [NOTICE](NOTICE) 中以 `Required Notice:` 开头的归属声明，包括原仓库链接。
+本项目采用 [PolyForm Noncommercial License 1.0.0](LICENSE)，属于 **source-available（源码可见）** 项目，不是 OSI 定义的开源软件。非商业用途可依许可证使用；商业用途需要事先取得版权所有者明确的书面许可。发送咨询邮件或进行一般性讨论本身不构成授权。
 
 完整边界见 [COMMERCIAL-LICENSE.md](COMMERCIAL-LICENSE.md)、[CONTENT-LICENSE.md](CONTENT-LICENSE.md) 和 [TRADEMARKS.md](TRADEMARKS.md)。
 
