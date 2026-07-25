@@ -1,10 +1,14 @@
 # 观自在 Guanzizai
 
+[![GitHub Stars](https://img.shields.io/github/stars/AmigaMeow/guanzizai?style=social)](https://github.com/AmigaMeow/guanzizai)
+
 观自在是一个面向佛教典籍与古籍的现代阅读项目。我们希望把安静、清楚的阅读体验与可靠的数字工具结合起来，让读者能够从原文出发，在需要时获得释文、检索和出处辅助。
 
 项目当前以 Next.js、React 和 TypeScript 构建，覆盖从内容导入、整理和审核，到前台阅读、个人书房和引用式问答的完整流程。
 
 ![观自在公开版阅读界面](docs/images/reader-demo.jpg)
+
+如果这个项目对你有帮助，欢迎点击仓库右上角的 `Star`；也欢迎分享给需要典籍阅读工具的朋友。
 
 ## 项目理念
 
