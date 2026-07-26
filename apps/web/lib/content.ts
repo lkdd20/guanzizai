@@ -1,5 +1,5 @@
 export type ReaderMode = 'original' | 'plain' | 'parallel'
-export type LibraryKind = '佛典' | '国学'
+export type LibraryKind = '国学'
 export type SourceVerification = 'unverified' | 'spot_checked' | 'verified'
 
 export interface PassageReadingNote {
@@ -150,11 +150,11 @@ export const siteConfig = {
 }
 
 /**
- * This repository deliberately ships no scripture, translation, generated
+ * This repository deliberately ships no real book, translation, generated
  * answer, catalog export, or production data. The record below is original
  * fictional text created only to demonstrate the reader UI.
  */
-export const heartSutraPassages: SutraPassage[] = [
+export const sampleWorkPassages: SutraPassage[] = [
   {
     id: 'sample-line-1',
     anchorId: 'sample-work_j1_0001',
@@ -183,7 +183,7 @@ export const heartSutraPassages: SutraPassage[] = [
 
 // The legacy export name is retained to avoid changing the reader interfaces.
 // It refers only to the fictional sample in this source-available edition.
-export const heartSutra: SutraRecord = {
+export const sampleWork: SutraRecord = {
   id: 'sample-work',
   library: '国学',
   sourceVerification: 'verified',
@@ -194,7 +194,7 @@ export const heartSutra: SutraRecord = {
   translator: '项目示例',
   sourceEdition: '本仓库原创虚构样例',
   category: '开发示例',
-  description: '用于演示阅读器功能的原创虚构文本，不属于藏经阁内容。',
+  description: '用于演示阅读器功能的原创虚构文本，不属于任何生产内容库。',
   overview: {
     summary: '这个最小样例仅用于演示原文优先、辅助释文、段落锚点和术语提示。',
     source: 'manual',
@@ -203,7 +203,7 @@ export const heartSutra: SutraRecord = {
     note: '公开仓库不包含真实书籍、译文、预生成回答或生产数据。',
   },
   juanCount: 1,
-  passages: heartSutraPassages,
+  passages: sampleWorkPassages,
 }
 
 export const termDefinitions: TermDefinition[] = [
@@ -258,25 +258,25 @@ export const updateRecords: UpdateRecord[] = [
 
 export const sutraLibraryEntries: SutraLibraryEntry[] = [
   {
-    workId: heartSutra.id,
-    library: heartSutra.library,
-    sourceVerification: heartSutra.sourceVerification,
-    section: heartSutra.category,
-    title: heartSutra.title,
+    workId: sampleWork.id,
+    library: sampleWork.library,
+    sourceVerification: sampleWork.sourceVerification,
+    section: sampleWork.category,
+    title: sampleWork.title,
     volume: '2 个原创样例段落',
-    dynasty: heartSutra.dynasty,
-    translator: heartSutra.translator,
+    dynasty: sampleWork.dynasty,
+    translator: sampleWork.translator,
     status: '功能演示',
-    note: '仅用于演示界面；本仓库不附带藏经阁书籍。',
+    note: '仅用于演示界面；本仓库不附带真实书籍。',
     available: true,
-    href: `/read/${heartSutra.id}`,
+    href: `/read/${sampleWork.id}`,
   },
 ]
 
 export function sutraById(id: string) {
   const normalized = id.trim().toLowerCase()
-  if (normalized === heartSutra.id.toLowerCase()) return heartSutra
-  return heartSutra.aliases.includes(normalized) ? heartSutra : undefined
+  if (normalized === sampleWork.id.toLowerCase()) return sampleWork
+  return sampleWork.aliases.includes(normalized) ? sampleWork : undefined
 }
 
 export function termByName(name: string) {
@@ -307,10 +307,10 @@ export function sutraStats(sutra: SutraRecord) {
   }
 }
 
-export function searchHeartSutra(query: string) {
+export function searchSampleWork(query: string) {
   const q = query.trim().toLowerCase()
   if (!q) return []
-  return heartSutra.passages.filter((passage) => (
+  return sampleWork.passages.filter((passage) => (
     passage.original.toLowerCase().includes(q)
     || passage.plain.toLowerCase().includes(q)
     || passage.terms.some((term) => term.toLowerCase().includes(q))

@@ -24,7 +24,7 @@ export default function Error({
         <div className="quiet-panel error-card">
           <span className="kicker error-kicker">暂时不通 · 歇一歇</span>
 
-          <p className="error-scripture" aria-hidden="true">
+          <p className="error-quote" aria-hidden="true">
             暂停片刻
             <br />
             再启此页

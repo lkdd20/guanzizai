@@ -41,7 +41,7 @@ export function normalizeProfileSlug(value: unknown) {
 }
 
 export function validProfileSlug(value: string) {
-  return /^[a-z0-9][a-z0-9-]{2,31}$/.test(value) && !['admin', 'api', 'ask', 'login', 'read', 'register', 'support', 'sutras'].includes(value)
+  return /^[a-z0-9][a-z0-9-]{2,31}$/.test(value) && !['admin', 'api', 'ask', 'login', 'read', 'register', 'sutras'].includes(value)
 }
 
 export function readingProgressRatio(sequence: number, totalPassages: number, intraPassageRatio = 0) {

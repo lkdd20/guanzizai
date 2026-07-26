@@ -1,4 +1,4 @@
-import { heartSutra, termDefinitions } from './content'
+import { sampleWork, termDefinitions } from './content'
 import { askPresetIdForQuestion, type AskPresetId } from './ask-preset-manifest'
 
 export interface AskCatalogResource {
@@ -6,7 +6,7 @@ export interface AskCatalogResource {
   title: string
   shortTitle: string
   href: string
-  library: '佛典' | '国学'
+  library: '国学'
   keywords: string[]
 }
 
@@ -29,11 +29,11 @@ export interface AskDatabaseResource {
 }
 
 const sampleResource: AskCatalogResource = {
-  id: heartSutra.id,
-  title: heartSutra.title,
-  shortTitle: heartSutra.shortTitle,
-  href: `/read/${heartSutra.id}`,
-  library: heartSutra.library,
+  id: sampleWork.id,
+  title: sampleWork.title,
+  shortTitle: sampleWork.shortTitle,
+  href: `/read/${sampleWork.id}`,
+  library: sampleWork.library,
   keywords: termDefinitions.map((term) => term.term),
 }
 
@@ -52,7 +52,7 @@ export function buildAskExperience(databaseResources: AskDatabaseResource[] = []
       title: resource.title,
       shortTitle: resource.title,
       href: `/read/${encodeURIComponent(resource.id)}`,
-      library: resource.library === '佛典' ? '佛典' : '国学',
+      library: '国学',
       keywords: [...new Set(resource.keywords)].slice(0, 4),
     })
   }

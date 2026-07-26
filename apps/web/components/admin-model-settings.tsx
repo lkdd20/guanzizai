@@ -94,7 +94,7 @@ export function AdminModelSettings({ endpoint }: { endpoint: string }) {
       </div>
 
       <label className="admin-model-select">
-        <span>照心实时问答模型</span>
+        <span>典籍助手实时问答模型</span>
         <select
           value={selectedModel}
           onChange={(event) => setSelectedModel(event.target.value)}
@@ -123,7 +123,7 @@ export function AdminModelSettings({ endpoint }: { endpoint: string }) {
 
       <p className={payload?.listError || message ? 'admin-model-message is-warn' : 'admin-model-message'} role="status">
         {message || payload?.listError || (payload?.storageAvailable
-          ? `已获取 ${payload.models.length} 个模型；切换只影响照心实时问答。`
+          ? `已获取 ${payload.models.length} 个模型；切换只影响典籍助手实时问答。`
           : '数据库设置表尚不可用；当前继续使用环境默认模型。')}
       </p>
     </div>

@@ -9,7 +9,7 @@ import { getPublicCatalog } from '@/lib/content-repository'
 
 export const metadata = {
   title: '典藏',
-  description: '观自在典藏：佛典与国学古籍共用同一套原文、白话和出处核验阅读流程。',
+  description: '观自在典藏：古籍原文、白话辅助和出处核验共用同一套阅读流程。',
 }
 
 // The public catalog changes infrequently. Rendering it on every navigation made
@@ -23,10 +23,10 @@ export default async function SutrasPage() {
   const databaseEntries: SutraLibraryEntry[] = databaseWorks.map((work) => ({
     workId: work.id,
     contentVersion: work.contentRevision,
-    library: work.library === '佛典' ? '佛典' : '国学',
+    library: '国学',
     sourceVerification: work.sourceVerification === 'verified' ? 'verified' : 'unverified',
     sourceBatch: work.sourceBatch,
-    section: work.category ?? (work.library === '佛典' ? '佛典' : '国学'),
+    section: work.category ?? '古籍',
     title: work.title,
     volume: `${work.passageCount.toLocaleString('zh-CN')} 段`,
     dynasty: work.dynasty ?? '年代待考',
@@ -41,22 +41,20 @@ export default async function SutrasPage() {
   const databaseTitles = new Set(databaseEntries.map((entry) => entry.title))
   const entries = [...staticEntries.filter((entry) => !databaseTitles.has(entry.title)), ...databaseEntries]
   const available = entries.filter((entry) => entry.available).length
-  const buddhistCount = entries.filter((entry) => entry.library === '佛典').length
   const guoxueCount = entries.filter((entry) => entry.library === '国学').length
 
   return (
     <div className="site-container">
       <section className="library-hero">
         <span className="kicker">典藏</span>
-        <h1 className="section-title">佛典与国学古籍，共用一套对照阅读。</h1>
+        <h1 className="section-title">古籍原文与辅助释文，共用一套对照阅读。</h1>
         <p className="section-copy">
-          这里展示已经开放阅读的完整作品，并按佛典与国学分馆整理。尚在拆卷、去重和核验的来源文件只在后台管理，不计作公开书籍。
+          这里展示已经开放阅读的非宗教古籍。尚在拆卷、去重和核验的来源文件只在后台管理，不计作公开书籍。
         </p>
         <div className="library-toolbar">
           <div className="flex flex-wrap gap-2">
             <Badge>已上线 {available}</Badge>
-            <Badge variant="outline">佛典 {buddhistCount}</Badge>
-            <Badge variant="outline">国学 {guoxueCount}</Badge>
+            <Badge variant="outline">古籍 {guoxueCount}</Badge>
           </div>
           <Button asChild>
             <Link href="/read/sample-work">

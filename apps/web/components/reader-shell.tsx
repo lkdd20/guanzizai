@@ -1,13 +1,11 @@
 'use client'
 
-import * as Dialog from '@radix-ui/react-dialog'
 import Link from 'next/link'
 import {
   BookOpen,
   Bookmark,
   BookmarkCheck,
   CheckCircle2,
-  CircleAlert,
   ChevronDown,
   ChevronRight,
   CornerUpLeft,
@@ -108,7 +106,6 @@ const directoryDrawerQuery = '(max-width: 1300px)'
 const termHoverDelay = 560
 const termCloseDelay = 240
 const resumePromptAutoDismissMs = 8000
-const scripturePlainConsentKey = 'guanzizai:scripture-plain-consent:v1'
 const enrichmentPageCache = new Map<string, Promise<{ enrichments: Array<{ passageId: string; enrichment: PassageEnrichment }> }>>()
 
 const modes: Array<{ value: ReaderMode; label: string; description: string }> = [
@@ -462,7 +459,7 @@ function isStructuredReadingHeading(text: string) {
   const cleaned = cleanReaderText(source).trim().replace(/^;/u, '')
   if (source.startsWith(';')) return true
   if (!isDisplayHeading(cleaned)) return false
-  return /(?:讚|赞|偈|頌|颂|真言|陀羅尼|陀罗尼|咒|序|跋|正文|品第[一二三四五六七八九十百千0-9]+|第[一二三四五六七八九十百千0-9]+品|經卷[一二三四五六七八九十百千0-9]*|经卷[一二三四五六七八九十百千0-9]*|卷[一二三四五六七八九十百千0-9]+)$/u.test(cleaned)
+  return /(?:序|跋|正文|篇第[一二三四五六七八九十百千0-9]+|第[一二三四五六七八九十百千0-9]+篇|卷[一二三四五六七八九十百千0-9]+)$/u.test(cleaned)
 }
 
 function readingVersePhrases(text: string) {
@@ -484,8 +481,7 @@ function readingLineAnchor(passageId: string, index: number, heading: boolean) {
 }
 
 function contributorLine(sutra: SutraRecord) {
-  const contributor = sutra.library === '佛典' ? `${sutra.translator}译` : sutra.translator
-  return `${sutra.dynasty} · ${contributor}`
+  return `${sutra.dynasty} · ${sutra.translator}`
 }
 
 export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
@@ -497,8 +493,6 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
   const [pairHintVisible, setPairHintVisible] = useState(false)
   const [session, setSession] = useState<ClientAuthSession>({ authenticated: false, user: null })
   const [contributionOpen, setContributionOpen] = useState(false)
-  const [scripturePlainNoticeOpen, setScripturePlainNoticeOpen] = useState(false)
-  const [pendingReaderMode, setPendingReaderMode] = useState<ReaderMode | null>(null)
   const [contributionPassageId, setContributionPassageId] = useState(sutra.passages[0]?.id ?? '')
   const [contributionState, setContributionState] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [contributionText, setContributionText] = useState('')
@@ -513,7 +507,6 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
   const pairedTargetTimerRef = useRef<number | null>(null)
   const hoverTimerRef = useRef<number | null>(null)
   const closeTimerRef = useRef<number | null>(null)
-  const scriptureInitialModeRef = useRef('')
   const settings = useReaderPreferences()
   const {
     contentVersion,
@@ -612,14 +605,6 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
     authenticated: session.authenticated,
     progressRatio: bookProgress,
   })
-
-  useEffect(() => {
-    if (!settings.hydrated || sutra.library !== '佛典') return
-    const entryKey = `${sutra.id}:${contentVersion}`
-    if (scriptureInitialModeRef.current === entryKey) return
-    scriptureInitialModeRef.current = entryKey
-    if (settings.mode !== 'original') settings.setMode('original')
-  }, [contentVersion, settings.hydrated, settings.mode, sutra.id, sutra.library])
 
   useEffect(() => {
     const encodedHash = window.location.hash.slice(1)
@@ -795,37 +780,7 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
   }
 
   function chooseReaderMode(mode: ReaderMode) {
-    if (mode === 'original' || sutra.library !== '佛典') {
-      settings.setMode(mode)
-      return
-    }
-    try {
-      if (window.localStorage.getItem(scripturePlainConsentKey) === 'accepted') {
-        settings.setMode(mode)
-        return
-      }
-    } catch {
-      // Private browsing can disable storage; the notice still works for this choice.
-    }
-    setPendingReaderMode(mode)
-    setScripturePlainNoticeOpen(true)
-  }
-
-  function confirmScripturePlainMode() {
-    try {
-      window.localStorage.setItem(scripturePlainConsentKey, 'accepted')
-    } catch {
-      // The reader can continue even when the browser refuses local storage.
-    }
-    settings.setMode(pendingReaderMode ?? 'parallel')
-    setPendingReaderMode(null)
-    setScripturePlainNoticeOpen(false)
-  }
-
-  function keepScriptureOriginalMode() {
-    settings.setMode('original')
-    setPendingReaderMode(null)
-    setScripturePlainNoticeOpen(false)
+    settings.setMode(mode)
   }
 
   async function loadSection(sequence: number, updateHistory = true) {
@@ -1653,7 +1608,7 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
                   </Link>
                   <Link href="/sutras">
                     <LibraryBig aria-hidden="true" />
-                    藏经阁
+                    古籍馆
                   </Link>
                   <strong>{localizedShortTitle}</strong>
                 </nav>
@@ -1916,13 +1871,6 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
                     <span>{sourceVerification.description}</span>
                   </p>
                 ) : null}
-                {sutra.library === '佛典' && settings.mode !== 'original' ? (
-                  <p className="read-scripture-plain-note">
-                    <CircleAlert aria-hidden="true" />
-                    <span><strong>白话只作辅助</strong>佛典义理依赖术语与语境，本站整理可能存在理解偏差，请以原文和注释为准。</span>
-                    <button type="button" onClick={() => settings.setMode('original')}>返回原文</button>
-                  </p>
-                ) : null}
                 <section className="read-overview-card" aria-labelledby="read-overview-title">
                   <div className="read-overview-head">
                     <h2 id="read-overview-title">关于{localizedShortTitle}</h2>
@@ -2130,35 +2078,6 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
         </main>
       </div>
 
-      <Dialog.Root open={scripturePlainNoticeOpen} onOpenChange={(open) => {
-        setScripturePlainNoticeOpen(open)
-        if (!open) setPendingReaderMode(null)
-      }}>
-        <Dialog.Portal>
-          <Dialog.Overlay className="scripture-plain-dialog-overlay" />
-          <Dialog.Content className="scripture-plain-dialog" aria-describedby="scripture-plain-description">
-            <span className="scripture-plain-dialog-mark" aria-hidden="true"><CircleAlert /></span>
-            <div className="scripture-plain-dialog-copy">
-              <span className="kicker">阅读提示</span>
-              <Dialog.Title>白话不能代替经文原意</Dialog.Title>
-              <Dialog.Description id="scripture-plain-description">
-                佛典术语与句义常有多种解释。本站白话可能包含 AI 或整理者的理解，只用于辅助阅读，不代表权威译解、宗派定论或修学依据。
-              </Dialog.Description>
-              <ul>
-                <li>建议先读原文，再结合术语注释理解。</li>
-                <li>咒语、音译词和义理概念尤其不宜只看白话。</li>
-                <li>发现疑义时，请以原文和可核验资料为准。</li>
-              </ul>
-              <small>本设备确认一次后不再重复弹出，阅读页仍会保留辅助说明。</small>
-            </div>
-            <div className="scripture-plain-dialog-actions">
-              <Button type="button" variant="outline" onClick={keepScriptureOriginalMode}>保持原文</Button>
-              <Button type="button" onClick={confirmScripturePlainMode}>理解并继续查看</Button>
-            </div>
-          </Dialog.Content>
-        </Dialog.Portal>
-      </Dialog.Root>
-
       {activeTerm ? (
         <aside
           className="term-float"
@@ -2169,7 +2088,7 @@ export function ReaderShell({ sutra, terms, startSequence }: ReaderShellProps) {
         >
           <span className="kicker">术语</span>
           <strong>{activeTerm.term}</strong>
-          <em>{activeTerm.sanskrit || '以经文语境为准'}</em>
+          <em>{activeTerm.sanskrit || '以原文语境为准'}</em>
           <p>{activeTerm.summary}</p>
           <small>{activeTerm.note}</small>
         </aside>

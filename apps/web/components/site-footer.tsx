@@ -8,7 +8,7 @@ const groups = [
     title: '阅读',
     links: [
       { href: '/read/sample-work', label: '原创阅读样例' },
-      { href: '/sutras', label: '典藏（佛典与国学）' },
+      { href: '/sutras', label: '古籍典藏' },
       { href: '/ask', label: '观自在问' },
     ],
   },
@@ -25,7 +25,6 @@ const groups = [
     links: [
       { href: '/account', label: '用户中心' },
       { href: '/contribute', label: '共建典藏' },
-      { href: '/support', label: '支持我们' },
       { href: '/privacy', label: '隐私政策' },
       { href: '/terms', label: '服务条款' },
     ],

@@ -34,7 +34,7 @@ export function SiteHeader() {
           </span>
           <span className="site-brand-text">
             <strong>观自在</strong>
-            <small>经文对照阅读</small>
+            <small>古籍对照阅读</small>
           </span>
         </Link>
 
@@ -76,14 +76,6 @@ export function SiteHeader() {
                     </Link>
                   )
                 })}
-                <Link
-                  className="mobile-nav-link"
-                  href="/support"
-                  onClick={() => setOpen(false)}
-                >
-                  <ShieldCheck aria-hidden="true" />
-                  支持我们
-                </Link>
                 <AccountNavLink
                   className="mobile-nav-link"
                   onNavigate={() => setOpen(false)}

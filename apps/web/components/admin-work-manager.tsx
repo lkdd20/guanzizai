@@ -48,7 +48,7 @@ const verificationLabels: Record<VerificationStatus, string> = {
 
 const publicationLabels: Record<PublicationStatus, string> = {
   hidden: '后台隐藏',
-  catalog_only: '仅显示经目',
+  catalog_only: '仅显示书目',
   published: '公开阅读',
 }
 

@@ -24,7 +24,7 @@ const migrations = [
   'postgres/migrations/0010_content_revision.sql',
   'postgres/migrations/0011_account_library.sql',
   'postgres/migrations/0012_gold_reader_highlights.sql',
-  'postgres/migrations/0013_buddhist_package_provenance.sql',
+  'postgres/migrations/0013_content_package_provenance.sql',
   'postgres/migrations/0014_term_glossary.sql',
   'postgres/migrations/0015_runtime_model_settings.sql',
   'postgres/migrations/0016_bug_report_contributions.sql',

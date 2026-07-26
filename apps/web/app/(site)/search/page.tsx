@@ -4,7 +4,7 @@ import { Search } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { searchHeartSutra } from '@/lib/content'
+import { searchSampleWork } from '@/lib/content'
 
 export const metadata = {
   title: '检索',
@@ -22,7 +22,7 @@ export default async function SearchPage({
   const params = await searchParams
   const raw = params?.q
   const q = Array.isArray(raw) ? raw[0] ?? '' : raw ?? ''
-  const results = searchHeartSutra(q)
+  const results = searchSampleWork(q)
 
   return (
     <div className="site-container">

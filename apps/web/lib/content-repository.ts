@@ -4,7 +4,7 @@ import { createHash } from 'node:crypto'
 import { getPublishedPassages, getPublishedWork, listPublishedCatalogWorks } from '@/lib/content-db'
 import { readWorkObject } from '@/lib/content-object-store'
 
-// Public reads are fail-closed for database content and fail-open for the static Heart Sutra.
+// Public reads are fail-closed for database content and fail-open for the original sample.
 export async function getPublicWorkById(id: string, requestedStart?: number) {
   const fallback = sutraById(id)
   if (fallback) return { source: 'static' as const, work: fallback }
@@ -28,7 +28,7 @@ export async function getPublicWorkById(id: string, requestedStart?: number) {
     }
     const sutra: SutraRecord = {
       id: work.id,
-      library: work.library === '佛典' ? '佛典' : '国学',
+      library: '国学',
       sourceVerification: work.sourceVerification === 'verified' ? 'verified' : 'unverified',
       sourceBatch: work.sourceBatch,
       aliases: [],
@@ -39,7 +39,7 @@ export async function getPublicWorkById(id: string, requestedStart?: number) {
       sourceEdition: work.sourceEdition,
       sourceUrl: work.sourcePath.startsWith('https://') ? work.sourcePath : undefined,
       contentVersion: work.contentRevision,
-      category: work.category ?? (work.library === '佛典' ? '佛典' : '国学'),
+      category: work.category ?? '古籍',
       description: '本作品原文来自已记录来源，核验状态与发布状态分开管理。',
       overview: {
         summary: work.publishedTranslationCount > 0

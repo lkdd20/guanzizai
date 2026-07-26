@@ -35,7 +35,7 @@ export async function generateSutraOverviewDraft(sutra: SutraRecord, now = new D
           {
             role: 'system',
             content:
-              '你是观自在的经文内容编辑。只能依据用户提供的经文元数据、原文和段落信息写简介；不要补写未给出的历史影响、宗派评价、功德效果或不可核验结论。只返回 JSON，不要返回 Markdown 或 HTML。',
+              '你是观自在的古籍内容编辑。只能依据用户提供的作品元数据、原文和段落信息写简介；不要补写未给出的历史影响、作者评价或不可核验结论。只返回 JSON，不要返回 Markdown 或 HTML。',
           },
           {
             role: 'user',

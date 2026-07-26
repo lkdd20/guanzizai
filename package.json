@@ -17,7 +17,6 @@
     "build:next": "pnpm --dir apps/web build",
     "optimize:images": "node scripts/optimize-images.mjs",
     "migrate:reader-platform": "node scripts/apply-reader-platform-migrations.mjs",
-    "audit:buddhist-translations": "node scripts/audit-buddhist-translations.mjs",
     "check:glyphs": "node scripts/check-reader-glyphs.mjs",
     "preview:next": "pnpm --dir apps/web preview"
   },

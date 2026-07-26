@@ -6,7 +6,6 @@ import {
   BookOpenCheck,
   CalendarDays,
   FileCheck2,
-  HeartHandshake,
   LayoutDashboard,
   MessageSquareText,
   Settings2,
@@ -19,11 +18,10 @@ interface AdminWorkspaceProps {
 
 const sections = [
   { id: 'overview', label: '总览', detail: '系统状态与待办', icon: LayoutDashboard },
-  { id: 'library', label: '内容库', detail: '经目、术语与发布', icon: BookOpenCheck },
+  { id: 'library', label: '内容库', detail: '书目、术语与发布', icon: BookOpenCheck },
   { id: 'translation', label: '译文审核', detail: 'AI 与用户投稿', icon: FileCheck2 },
   { id: 'agent', label: 'AI 与 Agent', detail: '问答与检索', icon: MessageSquareText },
   { id: 'daily', label: '每日历签', detail: '历法与原文推荐', icon: CalendarDays },
-  { id: 'support', label: '支持与运营', detail: '随喜与公开记录', icon: HeartHandshake },
   { id: 'system', label: '系统设置', detail: '权限与发布规则', icon: Settings2 },
 ] as const
 

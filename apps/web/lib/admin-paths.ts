@@ -11,7 +11,6 @@ const reservedPaths = new Set([
   '/read',
   '/search',
   '/sutras',
-  '/support',
   '/about',
   '/terms',
   '/privacy',

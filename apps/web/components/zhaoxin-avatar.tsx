@@ -10,9 +10,9 @@ export function ZhaoxinAvatar({ size = 'md', state = 'idle', className = '' }: Z
       className={`zhaoxin-avatar zhaoxin-avatar-${size} ${className}`.trim()}
       data-state={state}
       role="img"
-      aria-label="照心，典籍伴读小沙弥"
+      aria-label="典籍检索助手"
     >
-      <img src="/zhaoxin-novice.png" alt="" width="128" height="128" />
+      <img src="/brand-mark.svg" alt="" width="128" height="128" />
     </span>
   )
 }
