@@ -55,7 +55,6 @@ cp .env.example apps/web/.env.local
 | 邮箱登录 | `SMTP_*` | 可选 SMTP 登录邮件配置 |
 | AI 功能 | `NEWAPI_API_KEY`、`NEWAPI_BASE_URL`、`NEWAPI_MODEL` | 可选 OpenAI 兼容网关 |
 | 对象存储 | `R2_*`、`ASSET_BASE_URL` | 可选私有内容对象和资源域名 |
-| 支持页面 | `SUPPORT_OPEN` | 未配置自己的支持渠道时保持 `false` |
 
 可以用本机工具生成彼此独立的随机密钥，例如：
 
@@ -122,7 +121,7 @@ Cloudflare 与 Vercel 的环境变量和数据库网络条件不同。正式使�
 - `CONTENT_DATABASE_ENABLED=true` 前已确认数据库结构和公开内容；
 - 只导入有权使用或依法属于公有领域的文本；
 - OAuth 回调域名、SMTP 发信地址和管理员入口正确；
-- 支持页面不包含他人的收款信息；
+- 公开版不包含收款、赞助、募捐或支付功能；
 - 390px、768px 和桌面宽度均无横向溢出或遮挡；
 - `pnpm run typecheck`、`pnpm test` 和 `pnpm run build:next` 全部通过。
 

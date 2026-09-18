@@ -309,7 +309,7 @@ export async function listPublishedAskResources(): Promise<DatabaseAskResource[]
     SELECT w.id, w.title, w.library
     FROM works w
     WHERE w.publication_status='published'
-    ORDER BY CASE WHEN w.library='佛典' THEN 0 ELSE 1 END, w.category, w.title
+    ORDER BY w.category, w.title
   `
   const termsByWork = new Map<string, string[]>()
   try {
@@ -326,7 +326,7 @@ export async function listPublishedAskResources(): Promise<DatabaseAskResource[]
         LEFT JOIN term_mentions m ON m.definition_id=d.id AND m.displayable
         WHERE d.review_status <> 'rejected'
           AND char_length(g.term_simplified) BETWEEN 2 AND 12
-          AND g.term_simplified NOT IN ('佛教', '佛法', '经典', '原文', '众生', '菩萨')
+          AND g.term_simplified NOT IN ('经典', '原文', '作者', '作品')
         GROUP BY d.work_id, g.id, g.term_simplified
       )
       SELECT work_id, array_agg(term ORDER BY rank) AS terms
@@ -514,7 +514,7 @@ export async function getDailyPublishedQuote(seed: string, keywords: string[]): 
     .map((keyword) => keyword.replace(/[\\^$.*+?()[\]{}|]/gu, '').trim())
     .filter(Boolean)
     .slice(0, 12)
-  const pattern = safeKeywords.length ? safeKeywords.join('|') : '慈|悲|智慧|清净|精进|平等'
+  const pattern = safeKeywords.length ? safeKeywords.join('|') : '晨|月|山|水|学|思|善|信|静|明'
   const rows = await db`
     SELECT w.id AS work_id, w.title AS work_title, w.source_verification,
            p.id AS passage_id, p.sequence, COALESCE(s.juan, 1) AS juan,
@@ -524,7 +524,6 @@ export async function getDailyPublishedQuote(seed: string, keywords: string[]): 
     LEFT JOIN work_sections s ON s.id = p.section_id
     LEFT JOIN passage_enrichments e ON e.passage_id = p.id
     WHERE w.publication_status = 'published'
-      AND w.library = '佛典'
       AND p.sequence > w.reading_start_sequence
       AND char_length(p.original_text) BETWEEN 12 AND 180
       AND p.original_text !~ 'Category:|分類:|分类:'

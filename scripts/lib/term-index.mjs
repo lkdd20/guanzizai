@@ -1,5 +1,5 @@
 const defaultPassageTermLimit = 8
-const blockedAutoTerms = new Set(['佛', '菩萨', '菩薩', '如来', '如來', '世尊'])
+const blockedAutoTerms = new Set(['原文', '作品', '作者', '版本'])
 
 function compactTerm(value) {
   return String(value ?? '')

@@ -22,16 +22,10 @@ const catalogPageSize = 48
 
 const librarySections = [
   {
-    id: 'buddhist-canon',
-    library: '佛典',
-    title: '藏经阁',
-    description: '佛典按版本与来源整理，已开放作品可直接进入原文与白话对照阅读。',
-  },
-  {
     id: 'guoxue',
     library: '国学',
-    title: '国学馆',
-    description: '传统文化古籍与佛典共用阅读器；每部作品分别展示来源、核验等级与发布状态。',
+    title: '古籍馆',
+    description: '非宗教古籍使用统一阅读器；每部作品分别展示来源、核验等级与发布状态。',
   },
 ] as const
 
@@ -59,7 +53,6 @@ export function SutraLibrary({ entries }: SutraLibraryProps) {
   const [openingTitle, setOpeningTitle] = useState('')
   const [progressByWork, setProgressByWork] = useState<Map<string, ReadingProgressRecord>>(new Map())
   const [visibleCountByLibrary, setVisibleCountByLibrary] = useState<Record<string, number>>({
-    佛典: catalogPageSize,
     国学: catalogPageSize,
   })
 
@@ -83,7 +76,7 @@ export function SutraLibrary({ entries }: SutraLibraryProps) {
   }, [entries, query, section])
 
   useEffect(() => {
-    setVisibleCountByLibrary({ 佛典: catalogPageSize, 国学: catalogPageSize })
+    setVisibleCountByLibrary({ 国学: catalogPageSize })
   }, [query, section])
 
   const groupedEntries = useMemo(() => librarySections.map((item) => ({
@@ -105,7 +98,7 @@ export function SutraLibrary({ entries }: SutraLibraryProps) {
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             placeholder="检索书名、部类、作者"
-            aria-label="检索藏经阁"
+            aria-label="检索古籍库"
           />
         </div>
 

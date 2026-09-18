@@ -2,18 +2,15 @@ import Link from 'next/link'
 import {
   ArrowRight,
   BookOpenText,
-  HeartHandshake,
   LibraryBig,
   MessageSquareText,
-  SearchCheck,
   ShieldCheck,
-  Sparkles,
 } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { HeroParallaxText } from '@/components/hero-parallax-text'
 import { MuyuStrike } from '@/components/muyu-strike'
-import { heartSutra, sutraStats } from '@/lib/content'
+import { sampleWork, sutraStats } from '@/lib/content'
 import styles from './home-page.module.css'
 
 const homeEntries = [
@@ -27,7 +24,7 @@ const homeEntries = [
   },
   {
     title: '观自在问',
-    text: '把问题交给照心，它会先检索原文，再带出处回答。',
+    text: '把问题交给典籍助手，它会先检索原文，再带出处回答。',
     href: '/ask',
     prefetch: false,
     label: '问一句',
@@ -35,7 +32,7 @@ const homeEntries = [
   },
   {
     title: '典藏',
-    text: '佛典与国学共用一套目录，核验等级和开放状态分别标注。',
+    text: '不同古籍共用一套目录，核验等级和开放状态分别标注。',
     href: '/sutras',
     prefetch: false,
     label: '看典籍',
@@ -43,26 +40,8 @@ const homeEntries = [
   },
 ]
 
-const supportFocus = [
-  {
-    title: '观自在问',
-    text: '继续接入模型、检索和回答记录，让提问能回到原文与出处。',
-    icon: MessageSquareText,
-  },
-  {
-    title: 'AI 白话与翻译',
-    text: '模型调用和人工校准都需要成本，目标是更准确、更可核验。',
-    icon: Sparkles,
-  },
-  {
-    title: '后续开发',
-    text: '全文检索、术语库、多语言、更多授权文本和后台审核流程会逐步补齐。',
-    icon: SearchCheck,
-  },
-]
-
 export default function HomePage() {
-  const stats = sutraStats(heartSutra)
+  const stats = sutraStats(sampleWork)
 
   return (
     <>
@@ -149,7 +128,7 @@ export default function HomePage() {
               <span className="kicker">一套完整的典籍阅读方式</span>
               <h2 className="section-title">不是把古文搬上网页，而是让每一次理解都有路径。</h2>
               <p className="section-copy">
-                观自在把阅读、辅助理解与依据核验放在同一个体验里。你可以安静读原文，也可以在需要时再打开白话、术语和照心问答。
+                观自在把阅读、辅助理解与依据核验放在同一个体验里。你可以安静读原文，也可以在需要时再打开白话、术语和检索问答。
               </p>
               <div className={styles.productStoryActions}>
                 <Button asChild>
@@ -184,7 +163,7 @@ export default function HomePage() {
                 <span className={styles.stepNumber}>03</span>
                 <MessageSquareText aria-hidden="true" />
                 <div>
-                  <h3>需要时，再请照心解释</h3>
+                  <h3>需要时，再用检索问答</h3>
                   <p>AI 先检索已开放原文，再带依据回答；找不到证据时会明确停下。</p>
                 </div>
               </li>
@@ -193,41 +172,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className={`section home-support-section ${styles.homeSection} ${styles.supportSection}`}>
-        <div className="site-container">
-          <div className="home-support-panel">
-            <div className="home-support-copy">
-              <span className="kicker">支持我们</span>
-              <h2 className="section-title section-title-readable">支持不是付费墙，是把这些功能继续做下去。</h2>
-              <p className="section-copy">
-                观自在会保持免费阅读。随喜支持会优先投入到模型调用、AI 白话与翻译校准、检索基础设施和后续功能开发。
-              </p>
-              <div className="home-support-actions">
-                <Button asChild>
-                  <Link href="/support" prefetch={false}>
-                    支持观自在 <HeartHandshake aria-hidden="true" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline">
-                  <Link href="/updates" prefetch={false}>查看开发记录</Link>
-                </Button>
-              </div>
-            </div>
-            <div className="home-support-grid" aria-label="支持投入方向">
-              {supportFocus.map((item) => {
-                const Icon = item.icon
-                return (
-                  <article className="home-support-card" key={item.title}>
-                    <Icon aria-hidden="true" />
-                    <strong>{item.title}</strong>
-                    <span>{item.text}</span>
-                  </article>
-                )
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
     </>
   )
 }

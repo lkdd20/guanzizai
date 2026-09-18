@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
 
 import { ReaderShell } from '@/components/reader-shell'
-import { heartSutra, siteConfig, sutraById, termDefinitions } from '@/lib/content'
+import { sampleWork, siteConfig, sutraById, termDefinitions } from '@/lib/content'
 
 export async function generateStaticParams() {
-  return [{ id: heartSutra.id, juan: '1' }]
+  return [{ id: sampleWork.id, juan: '1' }]
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string; juan: string }> }) {

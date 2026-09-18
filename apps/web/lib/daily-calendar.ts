@@ -1,6 +1,6 @@
 import { Solar } from 'lunar-typescript'
 
-import { heartSutra, heartSutraPassages } from './content'
+import { sampleWork, sampleWorkPassages } from './content'
 
 export interface DailyTheme {
   id: string
@@ -189,7 +189,7 @@ export function selectDailyTheme(isoDate: string, yi: string[] = []) {
 }
 
 export function fallbackDailyQuote(isoDate: string, theme: DailyTheme): DailyQuote {
-  const ranked = heartSutraPassages
+  const ranked = sampleWorkPassages
     .map((passage) => ({
       passage,
       score: theme.keywords.reduce((score, keyword) => (
@@ -200,12 +200,12 @@ export function fallbackDailyQuote(isoDate: string, theme: DailyTheme): DailyQuo
     .sort((left, right) => right.score - left.score || left.tieBreaker - right.tieBreaker)
   const passage = ranked[0].passage
   return {
-    workId: heartSutra.id,
-    workTitle: heartSutra.title,
+    workId: sampleWork.id,
+    workTitle: sampleWork.title,
     passageId: passage.anchorId,
     quote: dailyQuoteExcerpt(passage.original, theme, isoDate),
-    sourceRef: `${heartSutra.title} · 第 ${passage.seq} 段`,
-    href: `/read/${heartSutra.id}#${passage.anchorId}`,
+    sourceRef: `${sampleWork.title} · 第 ${passage.seq} 段`,
+    href: `/read/${sampleWork.id}#${passage.anchorId}`,
     sourceVerification: 'verified',
   }
 }

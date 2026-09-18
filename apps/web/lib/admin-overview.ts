@@ -1,6 +1,6 @@
 import { askAgentConfigFromRuntime, askAgentTools } from '@/lib/ask-agent'
 import { askAgentProfile } from '@/lib/ask-agent-profile'
-import { heartSutra, sutraLibraryEntries, sutraStats, termDefinitions } from '@/lib/content'
+import { sampleWork, sutraLibraryEntries, sutraStats, termDefinitions } from '@/lib/content'
 
 export type AdminStatus = 'ok' | 'warn' | 'blocked'
 
@@ -133,7 +133,7 @@ function configItem(key: string, label: string, value: string | undefined, detai
 export async function getAdminOverview(now = new Date()): Promise<AdminOverview> {
   const published = sutraLibraryEntries.filter((entry) => entry.available)
   const candidates = sutraLibraryEntries.filter((entry) => !entry.available)
-  const heartStats = sutraStats(heartSutra)
+  const sampleStats = sutraStats(sampleWork)
   const agentConfig = await askAgentConfigFromRuntime()
   const modelKeyConfigured = configured(process.env.NEWAPI_API_KEY) || configured(process.env.DEEPSEEK_API_KEY)
   const model = agentConfig.model
@@ -157,13 +157,13 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
       {
         label: '已上线经典',
         value: String(published.length),
-        detail: `当前公开正文只来自 ${heartSutra.id}`,
+        detail: `当前公开正文只来自 ${sampleWork.id}`,
         status: 'ok',
       },
       {
         label: '原文段落',
-        value: String(heartSutra.passages.length),
-        detail: `${heartSutra.sourceEdition} · ${heartSutra.juanCount} 卷`,
+        value: String(sampleWork.passages.length),
+        detail: `${sampleWork.sourceEdition} · ${sampleWork.juanCount} 卷`,
         status: 'ok',
       },
       {
@@ -173,7 +173,7 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
         status: 'ok',
       },
       {
-        label: '候选经目',
+        label: '候选书目',
         value: String(candidates.length),
         detail: '未确认授权前不展示正文',
         status: candidates.length ? 'warn' : 'ok',
@@ -182,9 +182,9 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
     content: {
       publishedCount: published.length,
       candidateCount: candidates.length,
-      passageCount: heartSutra.passages.length,
+      passageCount: sampleWork.passages.length,
       termCount: termDefinitions.length,
-      sourceEdition: heartSutra.sourceEdition,
+      sourceEdition: sampleWork.sourceEdition,
       published: published.map((entry) => ({
         title: entry.title,
         section: entry.section,
@@ -201,41 +201,41 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
       })),
       processing: [
         {
-          id: heartSutra.id,
-          title: heartSutra.title,
-          href: `/read/${heartSutra.id}`,
-          overviewStatus: heartSutra.overview.summary ? 'ok' : 'warn',
+          id: sampleWork.id,
+          title: sampleWork.title,
+          href: `/read/${sampleWork.id}`,
+          overviewStatus: sampleWork.overview.summary ? 'ok' : 'warn',
           overviewMode:
-            heartSutra.overview.source === 'ai'
+            sampleWork.overview.source === 'ai'
               ? 'AI 生成 · 人工复核'
-              : heartSutra.overview.source === 'source'
+              : sampleWork.overview.source === 'source'
                 ? '底本自带说明'
                 : '人工整理',
-          overviewUpdatedAt: heartSutra.overview.updatedAt,
-          overviewSummary: heartSutra.overview.summary,
-          characterCount: heartStats.originalCharCount,
-          estimatedReadingMinutes: heartStats.estimatedReadingMinutes,
-          passageCount: heartStats.passageCount,
-          plainPassageCount: heartStats.plainPassageCount,
-          termCount: heartStats.termCount,
+          overviewUpdatedAt: sampleWork.overview.updatedAt,
+          overviewSummary: sampleWork.overview.summary,
+          characterCount: sampleStats.originalCharCount,
+          estimatedReadingMinutes: sampleStats.estimatedReadingMinutes,
+          passageCount: sampleStats.passageCount,
+          plainPassageCount: sampleStats.plainPassageCount,
+          termCount: sampleStats.termCount,
           tasks: [
             {
               title: '标题下方概览',
-              status: heartSutra.overview.summary ? 'ok' : 'warn',
+              status: sampleWork.overview.summary ? 'ok' : 'warn',
               owner: '内容审核',
-              detail: heartSutra.overview.note,
+              detail: sampleWork.overview.note,
             },
             {
               title: 'AI 白话辅助',
-              status: heartStats.plainPassageCount === heartStats.passageCount ? 'ok' : 'warn',
+              status: sampleStats.plainPassageCount === sampleStats.passageCount ? 'ok' : 'warn',
               owner: '内容整理',
-              detail: `${heartStats.plainPassageCount}/${heartStats.passageCount} 段已配置；页面仍默认显示原文。`,
+              detail: `${sampleStats.plainPassageCount}/${sampleStats.passageCount} 段已配置；页面仍默认显示原文。`,
             },
             {
               title: '术语提示',
-              status: heartStats.termCount ? 'ok' : 'warn',
+              status: sampleStats.termCount ? 'ok' : 'warn',
               owner: '内容整理',
-              detail: `${heartStats.termCount} 个术语已绑定到原文片段。`,
+              detail: `${sampleStats.termCount} 个术语已绑定到原文片段。`,
             },
             {
               title: 'RAG 检索入库',
@@ -273,7 +273,7 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
       workflow: [
         '问题规范化',
         '范围判断',
-        '经文检索',
+        '原文检索',
         '术语查找',
         '生成回答',
         '出处绑定',
@@ -287,8 +287,8 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
       fallback: '数据库关闭、未配置或查询失败时回退至内置原创演示段落',
       modelUsed: false,
       guardrails: [
-        '同一日期全站返回同一条原文，不临时生成或改写经句',
-        '数据库只检索 publication_status=published 的佛典原文',
+        '同一日期全站返回同一条原文，不临时生成或改写原句',
+        '数据库只检索 publication_status=published 的非宗教古籍原文',
         '阅读链接绑定作品与段落锚点，可直接回到原文核验',
         '传统历法与今日运势明确标注为文化参考，不作现实承诺',
       ],
@@ -332,7 +332,7 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
     },
     publishing: [
       {
-        title: '新经典入库',
+        title: '新作品入库',
         status: 'warn',
         owner: '内容审核',
         detail: '必须先确认底本、授权、译者署名和展示边界。',
@@ -367,7 +367,7 @@ export async function getAdminOverview(now = new Date()): Promise<AdminOverview>
         title: '授权边界',
         status: candidates.length ? 'warn' : 'ok',
         owner: '内容审核',
-        detail: '候选经典只显示经目信息，不展示未确认正文。',
+        detail: '候选作品只显示书目信息，不展示未确认正文。',
       },
       {
         title: 'AI 辅助标注',

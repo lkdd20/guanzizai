@@ -101,7 +101,7 @@ export async function AdminConsole() {
               <Link href={adminApiPath('overview')}>状态接口</Link>
             </Button>
             <Button asChild>
-              <Link href="/sutras">查看藏经阁</Link>
+              <Link href="/sutras">查看古籍馆</Link>
             </Button>
             <form action={adminApiPath('logout')} method="post">
               <Button type="submit" variant="ghost">退出后台</Button>
@@ -151,11 +151,11 @@ export async function AdminConsole() {
           <section className="admin-panel admin-panel-large" data-admin-section="library">
             <div className="admin-section-title">
               <LibraryBig size={18} />
-              <h2>经文内容库</h2>
+              <h2>古籍内容库</h2>
             </div>
             <div className="admin-metrics-row">
               <span>{overview.content.publishedCount} 部已上线</span>
-              <span>{overview.content.candidateCount} 部候选经目</span>
+              <span>{overview.content.candidateCount} 部候选书目</span>
               <span>{overview.content.passageCount} 个稳定段落</span>
               <span>{overview.content.termCount} 个静态示范术语</span>
             </div>
@@ -267,7 +267,7 @@ export async function AdminConsole() {
           <section className="admin-panel" data-admin-section="agent">
             <div className="admin-section-title">
               <MessageSquareText size={18} />
-              <h2>照心 Agent</h2>
+              <h2>典籍助手 Agent</h2>
             </div>
             <div className="admin-service-head">
               <StatusBadge status={overview.agent.status} />
@@ -371,36 +371,6 @@ export async function AdminConsole() {
             <WorkflowList items={overview.audit} />
           </section>
         </div>
-        <section className="admin-panel admin-panel-large admin-support-admin-panel" data-admin-section="support">
-          <div className="admin-section-title">
-            <HeartHandshake size={18} />
-            <h2>支持与运营</h2>
-          </div>
-          <p className="admin-panel-intro">
-            支持页的收款开关和公开记录需要由环境变量、支付流程与数据库共同控制。后台只显示状态，不在页面回显收款凭据。
-          </p>
-          <div className="admin-operations-grid">
-            <div>
-              <span>随喜通道</span>
-              <strong>{process.env.SUPPORT_OPEN === 'false' ? '暂未开放' : '已开放人工收款'}</strong>
-              <small>由 SUPPORT_OPEN 控制</small>
-            </div>
-            <div>
-              <span>功德墙</span>
-              <strong>人工审核后公开</strong>
-              <small>当前不自动展示付款信息</small>
-            </div>
-            <div>
-              <span>编辑入口</span>
-              <strong>支持页文案在代码中维护</strong>
-              <small>支付与 supporters 表接入后开放逐条管理</small>
-            </div>
-          </div>
-          <div className="admin-hero-actions admin-support-admin-actions">
-            <Button asChild variant="outline"><Link href="/support">查看支持页</Link></Button>
-            <Button asChild variant="outline"><Link href="/updates">查看更新记录</Link></Button>
-          </div>
-        </section>
         </AdminWorkspace>
 
         <div className="admin-footer-note">

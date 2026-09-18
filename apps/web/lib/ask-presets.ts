@@ -6,7 +6,7 @@ import { askAgentProfile } from './ask-agent-profile'
 import { addVerifiedInlineCitations } from './ask-answer-format'
 import type { AskAgentResponse, AskAgentSource } from './ask-agent'
 import { getAskPresetDefinition } from './ask-preset-data'
-import { heartSutra } from './content'
+import { sampleWork } from './content'
 import { getPublishedAskPresetPassages } from './content-db'
 
 function fingerprint(value: string) {
@@ -22,8 +22,8 @@ export async function resolveAskPreset(id: string, question: string): Promise<As
   const definition = getAskPresetDefinition(id, question)
   if (!definition) return undefined
 
-  const heartSnapshots = definition.sources.filter((snapshot) => snapshot.workId === heartSutra.id)
-  const databaseSnapshots = definition.sources.filter((snapshot) => snapshot.workId !== heartSutra.id)
+  const sampleSnapshots = definition.sources.filter((snapshot) => snapshot.workId === sampleWork.id)
+  const databaseSnapshots = definition.sources.filter((snapshot) => snapshot.workId !== sampleWork.id)
   const databasePassages = databaseSnapshots.length
     ? await getPublishedAskPresetPassages(databaseSnapshots.map((snapshot) => snapshot.passageId))
     : []
@@ -31,14 +31,14 @@ export async function resolveAskPreset(id: string, question: string): Promise<As
 
   const sources: AskAgentSource[] = []
   for (const [index, snapshot] of definition.sources.entries()) {
-    if (snapshot.workId === heartSutra.id) {
-      const passage = heartSutra.passages.find((candidate) => candidate.anchorId === snapshot.passageId)
+    if (snapshot.workId === sampleWork.id) {
+      const passage = sampleWork.passages.find((candidate) => candidate.anchorId === snapshot.passageId)
       if (!passage || passage.seq !== snapshot.sequence || fingerprint(passage.original) !== snapshot.fingerprint) return undefined
       sources.push({
         id: passage.anchorId,
         ref: passage.sourceRef,
         quote: passage.original,
-        href: `/read/${heartSutra.id}#${passage.anchorId}`,
+        href: `/read/${sampleWork.id}#${passage.anchorId}`,
         confidence: Math.max(78, 96 - index * 4),
         verification: 'verified',
       })
@@ -60,7 +60,7 @@ export async function resolveAskPreset(id: string, question: string): Promise<As
     })
   }
 
-  if (sources.length !== definition.sources.length || heartSnapshots.length + databaseSnapshots.length !== sources.length) return undefined
+  if (sources.length !== definition.sources.length || sampleSnapshots.length + databaseSnapshots.length !== sources.length) return undefined
 
   return {
     answer: addVerifiedInlineCitations(definition.answer, sources, 2),

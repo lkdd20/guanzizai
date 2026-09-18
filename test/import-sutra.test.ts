@@ -79,7 +79,7 @@ describe('sutra import script', () => {
     expect(sql).toContain('INSERT OR REPLACE INTO passages')
     expect(sql).toContain('INSERT OR REPLACE INTO translations')
     expect(sql).toContain("DELETE FROM translations WHERE passage_id IN ('PD0001_j1_0001', 'PD0001_j1_0002');")
-    expect(sql).toContain("'佛典'")
+    expect(sql).toContain("'国学'")
     expect(sql).toContain("'verified'")
     expect(sql).toContain("'公有领域文本，经人工核验'")
     expect(sql).toContain('NULL, 4,')

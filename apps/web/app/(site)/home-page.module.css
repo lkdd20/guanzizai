@@ -91,16 +91,10 @@
   line-height: 1.8;
 }
 
-.supportSection {
-  min-height: 0;
-  padding-bottom: clamp(76px, 8vh, 104px);
-}
-
 @media (max-width: 640px) {
   .homeSection,
   .entrySection,
-  .readingSection,
-  .supportSection {
+  .readingSection {
     min-height: auto;
     padding-top: 64px;
     padding-bottom: 64px;

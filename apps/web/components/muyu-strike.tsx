@@ -151,12 +151,12 @@ export function MuyuStrike() {
         className={styles.strikeButton}
         type="button"
         onClick={handleStrike}
-        aria-label={`敲木鱼，当前功德 ${count}`}
+        aria-label={`敲木鱼，当前专注计数 ${count}`}
       >
         <span className={styles.scene} aria-hidden="true">
           {count > 0 ? (
             <span className={styles.countDisplay} key={`count-${count}`}>
-              <span>功德</span>
+              <span>专注</span>
               <strong>{count.toLocaleString('zh-CN')}</strong>
             </span>
           ) : null}
@@ -232,7 +232,7 @@ export function MuyuStrike() {
 
           {milestone ? (
             <span className={styles.meritMilestone} key={milestone.id}>
-              阿弥陀佛
+              静心片刻
             </span>
           ) : null}
         </span>
@@ -250,7 +250,7 @@ export function MuyuStrike() {
       </button>
 
       <span className={styles.liveStatus} aria-live="polite" aria-atomic="true">
-        功德 {count}{milestone ? '，阿弥陀佛' : ''}
+        专注 {count}{milestone ? '，静心片刻' : ''}
       </span>
     </div>
   )

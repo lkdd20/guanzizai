@@ -13,7 +13,7 @@ import {
   type AskRecommendationProfile,
   type AskStoryMatch,
 } from './ask-recommendations'
-import { heartSutra, searchHeartSutra, termDefinitions, type SutraPassage } from './content'
+import { sampleWork, searchSampleWork, termDefinitions, type SutraPassage } from './content'
 import { askModelConfigFromRuntime, modelGatewayConfigFromEnv, type ModelGatewayConfig } from './model-settings'
 
 export type AskAgentMode = 'local' | 'model' | 'preset'
@@ -205,7 +205,7 @@ export async function runGuanzizaiAskAgent(
     trace.push(
       {
         id: 'search_passages',
-        label: '经文检索',
+        label: '原文检索',
         status: 'skipped',
         detail: '问题指代不明确，等待用户补充原句或对象。',
       },
@@ -220,7 +220,7 @@ export async function runGuanzizaiAskAgent(
       answer: `### 请再补充一点\n\n“${normalized}”里的指代还不够明确。你可以贴出原句、书名或前后文，我会先帮你确认在问什么，再决定是回到典藏原文，还是给出通识解释。`,
       sources: [],
       mode: 'local',
-      note: '问题指代不明确，照心先等待补充，不猜测对象。',
+      note: '问题指代不明确，典籍助手先等待补充，不猜测对象。',
       status: scope.status,
       scope: scope.scope,
       model: config.model,
@@ -241,7 +241,7 @@ export async function runGuanzizaiAskAgent(
   const sources = await selectSources(normalized, config, recommendationProfile)
   trace.push({
     id: 'search_passages',
-    label: '经文检索',
+    label: '原文检索',
     status: sources.length ? 'done' : 'limited',
     detail: sources.length ? `命中 ${sources.length} 条原文片段` : '未找到能够支持回答的原文片段。',
   })
@@ -340,7 +340,7 @@ export async function runGuanzizaiAskAgent(
     mode: modelAnswer ? 'model' : 'local',
     note: selectedSources.length
       ? '本轮回答有站内原文依据，可从出处卡片返回阅读页核验。'
-      : '本轮为通识解释，未引用站内原文；照心不会把一般知识伪装成典藏出处。',
+      : '本轮为通识解释，未引用站内原文；系统不会把一般知识伪装成典藏出处。',
     status: selectedSources.length ? 'answerable' : 'partially_answerable',
     scope: selectedSources.length ? recommendationProfile ? 'catalog-recommendation' : scope.scope : 'general-knowledge',
     model: config.model,
@@ -472,7 +472,7 @@ function classifyQuestion(question: string): QuestionScope {
   if (/^(这|那|它|这个|那个)(句|段|个)?(是)?(什么|什麼|啥)?意思[？?]?$/.test(question)) {
     return {
       status: 'clarification_needed',
-      scope: heartSutra.id,
+      scope: sampleWork.id,
       reason: '问题包含不明确指代，需要原句或术语。',
     }
   }
@@ -508,12 +508,12 @@ async function selectSources(
   const passages = new Map<string, SutraPassage>()
   if (!resolvedWorkIds.length) {
     for (const variant of queryVariants(question)) {
-      searchHeartSutra(variant).forEach((passage) => passages.set(passage.anchorId, passage))
+      searchSampleWork(variant).forEach((passage) => passages.set(passage.anchorId, passage))
     }
     const topic = findTopic(question)
     if (topic) {
       topic.anchors
-        .map((anchor) => heartSutra.passages.find((passage) => passage.anchorId === anchor))
+        .map((anchor) => sampleWork.passages.find((passage) => passage.anchorId === anchor))
         .filter((passage): passage is SutraPassage => Boolean(passage))
         .forEach((passage) => passages.set(passage.anchorId, passage))
     }
@@ -524,7 +524,7 @@ async function selectSources(
       id: passage.anchorId,
       ref: passage.sourceRef,
       quote: passage.original,
-      href: `/read/${encodeURIComponent(heartSutra.id)}#${encodeURIComponent(passage.anchorId)}`,
+      href: `/read/${encodeURIComponent(sampleWork.id)}#${encodeURIComponent(passage.anchorId)}`,
       confidence: Math.max(72, 94 - index * 4),
       verification: 'verified' as const,
     }))

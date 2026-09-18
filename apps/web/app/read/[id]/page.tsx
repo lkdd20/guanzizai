@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
 import { ReaderShell } from '@/components/reader-shell'
-import { heartSutra, siteConfig, termDefinitions } from '@/lib/content'
+import { sampleWork, siteConfig, termDefinitions } from '@/lib/content'
 import { getPublicWorkById } from '@/lib/content-repository'
 
 // Metadata and the page render ask for the same default reading window.
@@ -15,7 +15,7 @@ export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 export async function generateStaticParams() {
-  return [{ id: heartSutra.id }]
+  return [{ id: sampleWork.id }]
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {

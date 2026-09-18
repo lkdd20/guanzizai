@@ -19,7 +19,7 @@ const collectionRules = [
   {
     icon: BookCheck,
     title: '原创演示文本',
-    text: '公开源码只附带少量原创虚构段落，用于展示阅读、检索、引用和审核流程，不包含藏经阁书籍。',
+    text: '公开源码只附带少量原创虚构段落，用于展示阅读、检索、引用和审核流程，不包含真实书籍。',
   },
   {
     icon: Database,
@@ -73,7 +73,7 @@ export default function AboutPage() {
             <div className="mt-5 grid gap-3">
               <p className="leading-8 text-muted-foreground"><strong className="text-foreground">不闭合</strong>：平台不把译文、AI 回答或单一版本包装成最终结论。</p>
               <p className="leading-8 text-muted-foreground"><strong className="text-foreground">两条弧线</strong>：原文与辅助理解彼此呼应，但中心始终留给原文和读者。</p>
-              <p className="leading-8 text-muted-foreground"><strong className="text-foreground">暖金色</strong>：延续古籍、纸本与壁画的文脉，同时使用抽象形态兼容佛典与国学。</p>
+              <p className="leading-8 text-muted-foreground"><strong className="text-foreground">暖金色</strong>：延续古籍、纸本与壁画的文脉，同时使用抽象形态适配不同类型的古籍。</p>
             </div>
           </div>
         </div>

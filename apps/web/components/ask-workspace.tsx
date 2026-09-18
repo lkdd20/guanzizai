@@ -106,7 +106,7 @@ const maxStoredThreads = 20
 
 const initialResponse: AskResponse = {
   mode: 'local',
-  note: '照心会优先检索观自在典藏；没有命中站内原文时，仍会提供明确标注的通识解释。',
+  note: '典籍助手会优先检索已发布内容；没有命中站内原文时，仍会提供明确标注的通识解释。',
   agent: {
     name: askAgentProfile.internalName,
     displayName: askAgentProfile.name,
@@ -736,7 +736,7 @@ export function AskWorkspace({ experience }: { experience: AskExperience }) {
         ) : isGeneralAnswer ? (
           <div className="ask-knowledge-boundary">
             <Info size={16} aria-hidden="true" />
-            <span>本轮为通识解释，没有引用站内原文。照心不会为回答补造出处。</span>
+            <span>本轮为通识解释，没有引用站内原文。系统不会为回答补造出处。</span>
             <Link href="/sutras">浏览典藏 <ArrowUpRight size={13} /></Link>
           </div>
         ) : null}

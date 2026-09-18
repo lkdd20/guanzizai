@@ -35,7 +35,7 @@ export default function GlobalError({
             <div className="quiet-panel error-card">
               <span className="kicker error-kicker">页面异常</span>
 
-              <p className="error-scripture" aria-hidden="true">
+              <p className="error-quote" aria-hidden="true">
                 心無罣礙
                 <br />
                 無有恐怖

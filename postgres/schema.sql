@@ -31,7 +31,7 @@ CREATE TABLE import_jobs (
 
 CREATE TABLE works (
   id text PRIMARY KEY,
-  library text NOT NULL CHECK (library IN ('佛典', '国学')),
+  library text NOT NULL CHECK (length(trim(library)) > 0),
   source_batch text NOT NULL REFERENCES source_batches(id) ON DELETE RESTRICT,
   source_verification source_verification_status NOT NULL DEFAULT 'unverified',
   publication_status publication_status NOT NULL DEFAULT 'hidden',

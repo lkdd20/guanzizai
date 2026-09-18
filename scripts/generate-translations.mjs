@@ -51,7 +51,7 @@ async function translate(args, original) {
       body: JSON.stringify({
         model: args.model, temperature: 0.1,
         messages: [
-          { role: 'system', content: '你是古典汉语白话翻译器。忠实逐意翻译，不增补情节、评价、考据或宗教解释；保留人名地名；只输出白话译文，不输出标题、说明或原文。' },
+          { role: 'system', content: '你是古典汉语白话翻译器。忠实逐意翻译，不增补情节、评价、考据或无来源解释；保留人名地名；只输出白话译文，不输出标题、说明或原文。' },
           { role: 'user', content: original },
         ],
       }),

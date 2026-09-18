@@ -84,8 +84,7 @@ function cleanTitle(title: string) {
 }
 
 function contributorLine(sutra: SutraRecord) {
-  const contributor = sutra.library === '佛典' ? `${sutra.translator}译` : sutra.translator
-  return `${sutra.dynasty} · ${contributor}`
+  return `${sutra.dynasty} · ${sutra.translator}`
 }
 
 function sectionCandidates(outline: WorkOutlineItem[]) {
